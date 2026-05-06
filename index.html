@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLP Weight Management Calculator</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Tailwind v4 compiled output (run `npm run build` or `npm run dev`) -->
+  <link rel="stylesheet" href="./dist/output.css" />
+</head>
+
+<body class="font-lato bg-off-white text-text-dark min-h-screen">
+
+  <!-- ─── HEADER ─── -->
+  <header class="bg-purple relative overflow-hidden">
+    <!-- decorative blobs injected via CSS pseudo-elements on .header-blob-top -->
+    <div class="header-blob-top max-w-[900px] mx-auto px-6 py-9 relative z-10">
+      <!-- Badge -->
+      <span class="
+        inline-block bg-yellow text-purple-dark
+        font-nunito font-black text-[0.72rem] tracking-[0.12em] uppercase
+        px-[14px] py-[5px] rounded-full mb-[14px]
+      ">
+        ✨ GLP-1 Weight Management Tool
+      </span>
+
+      <!-- Headline -->
+      <h1 class="font-nunito font-black text-white leading-[1.1] mb-[10px]
+                 text-[clamp(2rem,5vw,3rem)]">
+        Your <span class="text-teal-light">Weight Loss</span><br />Journey Calculator
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-white/80 text-[1.05rem] font-light max-w-[520px]">
+        Estimate your progress with GLP-1 medications like Wegovy, Ozempic, and Mounjaro —
+        personalized to you.
+      </p>
+    </div>
+  </header>
+
+  <!-- ─── MAIN ─── -->
+  <main class="max-w-[900px] mx-auto px-5 pt-10 pb-16">
+
+    <!-- ── CARD: Units & Basic Info ── -->
+    <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up">
+      <!-- Card Title -->
+      <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                  text-purple mb-[22px]">
+        <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                     flex items-center justify-center text-[1.1rem]">⚖️</span>
+        Units &amp; Basic Info
+      </div>
+
+      <!-- Unit Toggle -->
+      <div class="mb-[18px]">
+        <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                      uppercase mb-[7px]">
+          Measurement System
+        </label>
+        <div id="unit-toggle"
+             class="flex bg-teal-pale rounded-[12px] p-1 gap-1">
+          <button
+            data-unit="imperial"
+            onclick="setUnit('imperial', this)"
+            class="flex-1 py-[10px] rounded-[9px] border-0
+                   font-nunito font-bold text-[0.9rem] cursor-pointer transition-all duration-200
+                   bg-teal text-white shadow-[0_2px_8px_rgba(75,191,191,0.35)]"
+          >
+            Imperial (lbs / ft)
+          </button>
+          <button
+            data-unit="metric"
+            onclick="setUnit('metric', this)"
+            class="flex-1 py-[10px] rounded-[9px] border-0
+                   font-nunito font-bold text-[0.9rem] cursor-pointer transition-all duration-200
+                   bg-transparent text-teal"
+          >
+            Metric (kg / cm)
+          </button>
+        </div>
+      </div>
+
+      <!-- Age & Sex -->
+      <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-[18px]">
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Age
+          </label>
+          <input
+            id="age" type="number" placeholder="e.g. 38" min="18" max="100"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   transition-[border-color,box-shadow] duration-200
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          />
+        </div>
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Sex
+          </label>
+          <select
+            id="sex"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   transition-[border-color,box-shadow] duration-200
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD: Height & Weight ── -->
+    <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up animate-fade-up-1">
+      <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                  text-purple mb-[22px]">
+        <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                     flex items-center justify-center text-[1.1rem]">📏</span>
+        Height &amp; Weight
+      </div>
+
+      <!-- Imperial inputs -->
+      <div id="hw-imperial" class="grid grid-cols-2 max-sm:grid-cols-1 gap-[18px]">
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Height
+          </label>
+          <div class="flex gap-[10px]">
+            <input
+              id="feet" type="number" placeholder="ft" min="3" max="8"
+              class="flex-1 px-4 py-3 border-2 border-border-soft rounded-[12px]
+                     text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                     focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+            />
+            <input
+              id="inches" type="number" placeholder="in" min="0" max="11"
+              class="flex-1 px-4 py-3 border-2 border-border-soft rounded-[12px]
+                     text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                     focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Current Weight (lbs)
+          </label>
+          <input
+            id="weight-lbs" type="number" placeholder="e.g. 220"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          />
+        </div>
+      </div>
+
+      <!-- Metric inputs -->
+      <div id="hw-metric" class="grid grid-cols-2 max-sm:grid-cols-1 gap-[18px] hidden">
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Height (cm)
+          </label>
+          <input
+            id="height-cm" type="number" placeholder="e.g. 170"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          />
+        </div>
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Current Weight (kg)
+          </label>
+          <input
+            id="weight-kg" type="number" placeholder="e.g. 95"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          />
+        </div>
+      </div>
+
+      <!-- Goal Weight Slider -->
+      <div class="mt-[18px]">
+        <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                      uppercase mb-[7px]">
+          Goal Weight <span id="goal-unit-lbl">(lbs)</span>
+        </label>
+        <div class="mt-[6px]">
+          <div class="flex justify-between mb-[6px]">
+            <span class="text-[0.82rem] text-text-mid">Lighter</span>
+            <strong id="goal-display" class="text-base text-purple font-nunito">— lbs</strong>
+            <span class="text-[0.82rem] text-text-mid">Current</span>
+          </div>
+          <input
+            type="range" id="goal-slider" min="100" max="400" value="180"
+            oninput="updateGoalSlider(this)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD: Medication ── -->
+    <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up animate-fade-up-2">
+      <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                  text-purple mb-[22px]">
+        <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                     flex items-center justify-center text-[1.1rem]">💊</span>
+        GLP-1 Medication
+      </div>
+
+      <!-- Med Pills -->
+      <div class="mb-[18px]">
+        <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                      uppercase mb-[7px]">
+          Select Your Medication
+        </label>
+        <div id="med-pills" class="flex flex-wrap gap-[10px]">
+          <button
+            data-med="semaglutide-high"
+            onclick="selectMed(this, 'semaglutide-high')"
+            class="med-pill px-[18px] py-[9px] rounded-full border-2 border-purple bg-purple
+                   font-nunito font-bold text-[0.88rem] text-white cursor-pointer transition-all duration-200"
+          >
+            Wegovy (sema 2.4mg)
+          </button>
+          <button
+            data-med="semaglutide-low"
+            onclick="selectMed(this, 'semaglutide-low')"
+            class="med-pill px-[18px] py-[9px] rounded-full border-2 border-border-soft bg-off-white
+                   font-nunito font-bold text-[0.88rem] text-text-mid cursor-pointer transition-all duration-200
+                   hover:border-purple-light hover:text-purple"
+          >
+            Ozempic (sema 1mg)
+          </button>
+          <button
+            data-med="tirzepatide"
+            onclick="selectMed(this, 'tirzepatide')"
+            class="med-pill px-[18px] py-[9px] rounded-full border-2 border-border-soft bg-off-white
+                   font-nunito font-bold text-[0.88rem] text-text-mid cursor-pointer transition-all duration-200
+                   hover:border-purple-light hover:text-purple"
+          >
+            Mounjaro / Zepbound
+          </button>
+          <button
+            data-med="liraglutide"
+            onclick="selectMed(this, 'liraglutide')"
+            class="med-pill px-[18px] py-[9px] rounded-full border-2 border-border-soft bg-off-white
+                   font-nunito font-bold text-[0.88rem] text-text-mid cursor-pointer transition-all duration-200
+                   hover:border-purple-light hover:text-purple"
+          >
+            Saxenda (liraglutide)
+          </button>
+          <button
+            data-med="none"
+            onclick="selectMed(this, 'none')"
+            class="med-pill px-[18px] py-[9px] rounded-full border-2 border-border-soft bg-off-white
+                   font-nunito font-bold text-[0.88rem] text-text-mid cursor-pointer transition-all duration-200
+                   hover:border-purple-light hover:text-purple"
+          >
+            Lifestyle Only
+          </button>
+        </div>
+      </div>
+
+      <!-- Duration & Activity -->
+      <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-[18px]">
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Treatment Duration
+          </label>
+          <select
+            id="duration"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          >
+            <option value="6">6 months</option>
+            <option value="12" selected>12 months</option>
+            <option value="18">18 months</option>
+            <option value="24">24 months</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[0.82rem] font-bold text-text-mid tracking-[0.05em]
+                        uppercase mb-[7px]">
+            Activity Level
+          </label>
+          <select
+            id="activity"
+            class="w-full px-4 py-3 border-2 border-border-soft rounded-[12px]
+                   text-base font-lato text-text-dark bg-off-white outline-none appearance-none
+                   focus:border-teal focus:shadow-[0_0_0_3px_rgba(75,191,191,0.18)] focus:bg-white"
+          >
+            <option value="0.9">Sedentary</option>
+            <option value="1.0" selected>Lightly Active</option>
+            <option value="1.1">Moderately Active</option>
+            <option value="1.2">Very Active</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CALCULATE BUTTON ── -->
+    <button
+      onclick="calculate()"
+      class="w-full py-[17px] mb-2
+             bg-gradient-to-br from-purple to-teal
+             text-white border-0 rounded-[14px]
+             font-nunito font-black text-[1.15rem] tracking-[0.03em]
+             cursor-pointer shadow-btn
+             transition-[transform,box-shadow] duration-150
+             hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(107,63,160,0.4)]
+             active:translate-y-0"
+    >
+      Calculate My Weight Loss Journey →
+    </button>
+
+    <!-- ──────────────────────────────────────────
+         RESULTS SECTION (hidden until calculate())
+    ─────────────────────────────────────────── -->
+    <div id="results" class="hidden mt-7">
+
+      <!-- Results Banner -->
+      <div class="results-banner relative overflow-hidden
+                  bg-gradient-to-br from-purple-dark to-purple
+                  rounded-[20px] p-8 text-white mb-6 animate-fade-up">
+        <h2 class="font-nunito font-black text-[1.3rem] text-yellow-light mb-[18px]">
+          🎉 Your Personalized Projection
+        </h2>
+        <div class="flex gap-8 flex-wrap">
+          <div>
+            <div id="res-loss"
+                 class="font-nunito font-black text-[2.2rem] leading-none text-teal-light">—</div>
+            <div class="text-[0.8rem] opacity-75 uppercase tracking-[0.07em] mt-1">
+              Projected Loss
+            </div>
+          </div>
+          <div>
+            <div id="res-pct"
+                 class="font-nunito font-black text-[2.2rem] leading-none text-teal-light">—</div>
+            <div class="text-[0.8rem] opacity-75 uppercase tracking-[0.07em] mt-1">
+              Body Weight Lost
+            </div>
+          </div>
+          <div>
+            <div id="res-target"
+                 class="font-nunito font-black text-[2.2rem] leading-none text-teal-light">—</div>
+            <div class="text-[0.8rem] opacity-75 uppercase tracking-[0.07em] mt-1">
+              Target Weight
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-[18px] mb-6 animate-fade-up animate-fade-up-1">
+        <!-- Current BMI -->
+        <div class="bg-white rounded-[16px] p-[22px] shadow-card border-t-4 border-teal">
+          <div class="text-[0.78rem] font-bold uppercase tracking-[0.07em] text-text-mid mb-[6px]">
+            Current BMI
+          </div>
+          <div id="res-bmi-start"
+               class="font-nunito font-black text-[1.7rem] text-purple leading-none">—</div>
+          <div id="res-bmi-cat-start" class="text-[0.82rem] text-text-mid mt-[5px]">—</div>
+        </div>
+        <!-- Projected BMI -->
+        <div class="bg-white rounded-[16px] p-[22px] shadow-card border-t-4 border-yellow">
+          <div class="text-[0.78rem] font-bold uppercase tracking-[0.07em] text-text-mid mb-[6px]">
+            Projected BMI
+          </div>
+          <div id="res-bmi-end"
+               class="font-nunito font-black text-[1.7rem] text-purple leading-none">—</div>
+          <div id="res-bmi-cat-end" class="text-[0.82rem] text-text-mid mt-[5px]">—</div>
+        </div>
+        <!-- Daily Calories -->
+        <div class="bg-white rounded-[16px] p-[22px] shadow-card border-t-4 border-purple">
+          <div class="text-[0.78rem] font-bold uppercase tracking-[0.07em] text-text-mid mb-[6px]">
+            Daily Calories
+          </div>
+          <div id="res-calories"
+               class="font-nunito font-black text-[1.7rem] text-purple leading-none">—</div>
+          <div class="text-[0.82rem] text-text-mid mt-[5px]">Recommended target</div>
+        </div>
+      </div>
+
+      <!-- Progress Card -->
+      <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up animate-fade-up-2">
+        <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                    text-purple mb-[22px]">
+          <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                       flex items-center justify-center text-[1.1rem]">📈</span>
+          Weight Loss Progress
+        </div>
+        <div>
+          <div class="flex justify-between text-[0.82rem] text-text-mid mb-[6px]">
+            <span id="prog-start">Start</span>
+            <span id="prog-end">Goal</span>
+          </div>
+          <div class="bg-border-soft rounded-full h-3 overflow-hidden">
+            <div
+              id="prog-bar"
+              class="h-full rounded-full bg-gradient-to-r from-teal to-purple
+                     transition-[width] duration-1000 ease-[cubic-bezier(.4,0,.2,1)]"
+              style="width: 0%"
+            ></div>
+          </div>
+          <p id="prog-note" class="text-[0.82rem] text-text-mid mt-2"></p>
+        </div>
+      </div>
+
+      <!-- Timeline Card -->
+      <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up animate-fade-up-3">
+        <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                    text-purple mb-[22px]">
+          <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                       flex items-center justify-center text-[1.1rem]">🗓️</span>
+          Milestone Timeline
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+
+      <!-- Tips Card -->
+      <div class="bg-white rounded-[20px] p-8 shadow-card mb-7 animate-fade-up">
+        <div class="flex items-center gap-[10px] font-nunito font-extrabold text-[1.15rem]
+                    text-purple mb-[22px]">
+          <span class="w-9 h-9 rounded-[10px] bg-teal-pale text-teal
+                       flex items-center justify-center text-[1.1rem]">💡</span>
+          Personalized Tips
+        </div>
+        <div id="tips-container" class="space-y-[10px]"></div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="bg-[#FFF8E6] border-l-4 border-yellow rounded-r-[12px]
+                  px-[18px] py-[14px] text-[0.82rem] text-[#7A6000] leading-relaxed mt-5">
+        ⚠️ <strong>Medical Disclaimer:</strong> This tool provides estimates based on published
+        clinical trial data and is intended for informational purposes only. Individual results
+        vary significantly. GLP-1 medications require a prescription and medical supervision.
+        Please consult your healthcare provider before starting or adjusting any weight
+        management treatment.
+      </div>
+
+    </div><!-- /results -->
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="text-center py-6 text-[0.82rem] text-text-mid border-t border-gray-200">
+    GLP Weight Management Calculator &nbsp;·&nbsp; For informational purposes only
+    &nbsp;·&nbsp; Not medical advice
+  </footer>
+
+  <!-- ─── JAVASCRIPT ─── -->
+  <script>
+    // ── State ──
+    let unit = 'imperial';
+    let selectedMed = 'semaglutide-high';
+
+    const medData = {
+      'semaglutide-high': { name: 'Wegovy',           pct: 0.147, label: '~14-17% body weight' },
+      'semaglutide-low':  { name: 'Ozempic',          pct: 0.10,  label: '~8-10% body weight'  },
+      'tirzepatide':      { name: 'Mounjaro/Zepbound', pct: 0.206, label: '~18-22% body weight' },
+      'liraglutide':      { name: 'Saxenda',           pct: 0.075, label: '~5-9% body weight'   },
+      'none':             { name: 'Lifestyle Only',    pct: 0.035, label: '~3-5% body weight'   },
+    };
+
+    // ── Unit Toggle ──
+    function setUnit(u, btn) {
+      unit = u;
+
+      // Toggle button styles
+      document.querySelectorAll('#unit-toggle button').forEach(b => {
+        const isActive = b.dataset.unit === u;
+        b.classList.toggle('bg-teal',      isActive);
+        b.classList.toggle('text-white',   isActive);
+        b.classList.toggle('shadow-[0_2px_8px_rgba(75,191,191,0.35)]', isActive);
+        b.classList.toggle('bg-transparent', !isActive);
+        b.classList.toggle('text-teal',    !isActive);
+      });
+
+      document.getElementById('hw-imperial').classList.toggle('hidden', u !== 'imperial');
+      document.getElementById('hw-metric').classList.toggle('hidden',   u !== 'metric');
+      document.getElementById('goal-unit-lbl').textContent = u === 'imperial' ? '(lbs)' : '(kg)';
+
+      const slider = document.getElementById('goal-slider');
+      if (u === 'metric') { slider.min = 40; slider.max = 200; slider.value = 80; }
+      else                { slider.min = 100; slider.max = 400; slider.value = 180; }
+      updateGoalSlider(slider);
+    }
+
+    // ── Med Pill Selection ──
+    function selectMed(el, med) {
+      selectedMed = med;
+      document.querySelectorAll('.med-pill').forEach(p => {
+        const isSelected = p.dataset.med === med;
+        p.classList.toggle('bg-purple',       isSelected);
+        p.classList.toggle('border-purple',   isSelected);
+        p.classList.toggle('text-white',      isSelected);
+        p.classList.toggle('bg-off-white',    !isSelected);
+        p.classList.toggle('border-border-soft', !isSelected);
+        p.classList.toggle('text-text-mid',   !isSelected);
+      });
+    }
+
+    // ── Slider ──
+    function updateGoalSlider(el) {
+      const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+      el.style.setProperty('--range-pct', pct + '%');
+      document.getElementById('goal-display').textContent =
+        el.value + (unit === 'imperial' ? ' lbs' : ' kg');
+    }
+
+    // ── BMI Category ──
+    function bmiCategory(bmi) {
+      if (bmi < 18.5) return 'Underweight';
+      if (bmi < 25)   return 'Normal weight';
+      if (bmi < 30)   return 'Overweight';
+      if (bmi < 35)   return 'Obese I';
+      if (bmi < 40)   return 'Obese II';
+      return 'Obese III';
+    }
+
+    // ── Main Calculate ──
+    function calculate() {
+      let weightKg, heightM, goalKg;
+
+      if (unit === 'imperial') {
+        const lbs     = parseFloat(document.getElementById('weight-lbs').value);
+        const ft      = parseFloat(document.getElementById('feet').value)   || 0;
+        const ins     = parseFloat(document.getElementById('inches').value) || 0;
+        const goalLbs = parseFloat(document.getElementById('goal-slider').value);
+        if (!lbs || (!ft && !ins)) { alert('Please enter your height and weight.'); return; }
+        weightKg = lbs * 0.453592;
+        heightM  = (ft * 12 + ins) * 0.0254;
+        goalKg   = goalLbs * 0.453592;
+      } else {
+        weightKg     = parseFloat(document.getElementById('weight-kg').value);
+        const cm     = parseFloat(document.getElementById('height-cm').value);
+        goalKg       = parseFloat(document.getElementById('goal-slider').value);
+        if (!weightKg || !cm) { alert('Please enter your height and weight.'); return; }
+        heightM = cm / 100;
+      }
+
+      const age      = parseInt(document.getElementById('age').value) || 35;
+      const sex      = document.getElementById('sex').value;
+      const months   = parseInt(document.getElementById('duration').value);
+      const activity = parseFloat(document.getElementById('activity').value);
+      const med      = medData[selectedMed];
+
+      // BMR (Mifflin-St Jeor)
+      const bmr  = 10 * weightKg + 6.25 * (heightM * 100) - 5 * age + (sex === 'male' ? 5 : -161);
+      const tdee = bmr * (sex === 'male' ? 1.55 : 1.5) * activity;
+      const targetCalories = Math.round(tdee * 0.8);
+
+      // Projection
+      const scaleFactor   = Math.min(1, months / 12);
+      const projLossKg    = weightKg * med.pct * scaleFactor;
+      const projWeightKg  = Math.max(weightKg - projLossKg, goalKg);
+      const actualLossKg  = weightKg - projWeightKg;
+
+      const bmiStart = weightKg    / (heightM * heightM);
+      const bmiEnd   = projWeightKg / (heightM * heightM);
+
+      const isImp = unit === 'imperial';
+      const conv  = isImp ? 2.20462 : 1;
+      const u2    = isImp ? 'lbs' : 'kg';
+
+      // ── Populate Results ──
+      document.getElementById('res-loss').textContent   = (actualLossKg * conv).toFixed(1) + ' ' + u2;
+      document.getElementById('res-pct').textContent    = (actualLossKg / weightKg * 100).toFixed(1) + '%';
+      document.getElementById('res-target').textContent = (projWeightKg * conv).toFixed(1) + ' ' + u2;
+
+      document.getElementById('res-bmi-start').textContent    = bmiStart.toFixed(1);
+      document.getElementById('res-bmi-cat-start').textContent = bmiCategory(bmiStart);
+      document.getElementById('res-bmi-end').textContent      = bmiEnd.toFixed(1);
+      document.getElementById('res-bmi-cat-end').textContent  = bmiCategory(bmiEnd);
+      document.getElementById('res-calories').textContent     = targetCalories.toLocaleString();
+
+      // Progress bar
+      const goalW   = parseFloat(document.getElementById('goal-slider').value);
+      const startW  = isImp ? weightKg * 2.20462 : weightKg;
+      const projW   = projWeightKg * conv;
+      const progPct = Math.min(100, Math.max(0, ((startW - projW) / (startW - goalW)) * 100));
+
+      document.getElementById('prog-start').textContent = startW.toFixed(1) + ' ' + u2;
+      document.getElementById('prog-end').textContent   = goalW + ' ' + u2;
+      document.getElementById('prog-note').textContent  =
+        `Projected to reach ${projW.toFixed(1)} ${u2} in ${months} months with ${med.name} — ${progPct.toFixed(0)}% toward your goal.`;
+
+      // Timeline
+      const milestones = [1, 3, 6, months].filter((v, i, a) => a.indexOf(v) === i);
+      const tl = document.getElementById('timeline');
+      tl.innerHTML = milestones.map(m => {
+        const f    = Math.min(1, m / 12);
+        const loss = (weightKg * med.pct * f * conv).toFixed(1);
+        const wt   = ((weightKg - weightKg * med.pct * f) * conv).toFixed(1);
+        return `
+          <div class="timeline-item">
+            <div class="font-nunito font-extrabold text-purple text-[0.92rem]">Month ${m}</div>
+            <div class="text-[0.88rem] text-text-mid mt-0.5">
+              ~${loss} ${u2} lost · Projected weight: ${wt} ${u2}
+            </div>
+          </div>`;
+      }).join('');
+
+      // Tips
+      const tips = [
+        { icon: '🥦', html: `<strong>Protein first:</strong> Aim for ${Math.round(weightKg * 1.6)}–${Math.round(weightKg * 2.0)}g of protein daily to preserve muscle while losing fat.` },
+        { icon: '💧', html: `<strong>Hydration:</strong> Drink at least ${(weightKg * 0.033).toFixed(1)}L of water per day. GLP-1s can suppress thirst signals.` },
+        { icon: '🚶', html: `<strong>Movement:</strong> Even light walking 20–30 min/day amplifies GLP-1 results significantly.` },
+        { icon: '😴', html: `<strong>Sleep:</strong> Poor sleep reduces GLP-1 effectiveness and increases hunger hormones. Target 7–9 hours nightly.` },
+      ];
+      if (selectedMed !== 'none') {
+        tips.push({ icon: '📅', html: `<strong>${med.name} reminder:</strong> Consistency is key — missing doses can slow progress. Set a weekly injection reminder.` });
+      }
+
+      document.getElementById('tips-container').innerHTML = tips.map(t => `
+        <div class="flex gap-[14px] items-start p-[14px] bg-teal-pale rounded-[12px]">
+          <span class="text-[1.3rem] shrink-0">${t.icon}</span>
+          <p class="text-[0.9rem] text-text-dark leading-relaxed">${t.html}</p>
+        </div>`
+      ).join('');
+
+      // Show results
+      const results = document.getElementById('results');
+      results.classList.remove('hidden');
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Animate progress bar after paint
+      setTimeout(() => {
+        document.getElementById('prog-bar').style.width = progPct.toFixed(0) + '%';
+      }, 100);
+    }
+
+    // ── Init ──
+    updateGoalSlider(document.getElementById('goal-slider'));
+  </script>
+
+</body>
+</html>
