@@ -87,6 +87,29 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Hormoscale",
+  applicationCategory: "HealthApplication",
+  operatingSystem: "Web",
+  url: "https://www.hormoscale.com",
+  description:
+    "Hormoscale is a free GLP-1 weight loss calculator designed to estimate projected weight loss, BMI changes, milestone timelines, and personalized metabolic insights.",
+  keywords:
+    "GLP-1 calculator, Ozempic calculator, Wegovy calculator, Mounjaro calculator, semaglutide, tirzepatide, weight loss calculator",
+  creator: {
+    "@type": "Organization",
+    name: "Hormoscale",
+    url: "https://www.hormoscale.com",
+  },
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -98,6 +121,15 @@ export default function RootLayout({
         <GoogleAnalytics />
 
         {children}
+
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
 
         {process.env.NEXT_PUBLIC_CLARITY_ID && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
