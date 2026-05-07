@@ -11,24 +11,44 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hormoscale.com"),
-  title: "GLP-1 Weight Loss Calculator | Hormoscale",
+  metadataBase: new URL("https://www.hormoscale.com"),
+
+  title: {
+    default: "GLP-1 Weight Loss Calculator | Hormoscale",
+    template: "%s | Hormoscale",
+  },
+
   description:
-    "Estimate your projected GLP-1 weight loss journey with personalized metabolic insights.",
+    "Use Hormoscale's free GLP-1 weight loss calculator to estimate projected weight loss, BMI changes, milestone timelines, and personalized insights for medications like Ozempic, Wegovy, Mounjaro, semaglutide, and tirzepatide.",
+
   keywords: [
     "GLP-1 calculator",
+    "GLP-1 weight loss calculator",
     "weight loss calculator",
-    "Wegovy calculator",
     "Ozempic calculator",
+    "Wegovy calculator",
     "Mounjaro calculator",
-    "semaglutide weight loss",
-    "tirzepatide weight loss",
+    "semaglutide weight loss calculator",
+    "tirzepatide weight loss calculator",
+    "GLP-1 weight loss projection",
+    "BMI calculator",
+    "medical weight loss calculator",
+    "metabolic health calculator",
   ],
+
+  authors: [{ name: "Hormoscale" }],
+  creator: "Hormoscale",
+  publisher: "Hormoscale",
+
+  alternates: {
+    canonical: "https://www.hormoscale.com",
+  },
+
   openGraph: {
     title: "GLP-1 Weight Loss Calculator | Hormoscale",
     description:
-      "Estimate your projected GLP-1 weight loss journey with personalized metabolic insights.",
-    url: "https://hormoscale.com",
+      "Estimate your GLP-1 weight loss journey with personalized projections, BMI changes, milestone timelines, and PDF report insights.",
+    url: "https://www.hormoscale.com",
     siteName: "Hormoscale",
     images: [
       {
@@ -41,13 +61,27 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: "GLP-1 Weight Loss Calculator | Hormoscale",
     description:
-      "Estimate your projected GLP-1 weight loss journey with personalized metabolic insights.",
+      "Estimate your projected GLP-1 weight loss, BMI changes, milestone timeline, and personalized report.",
     images: ["/opengraph-image"],
   },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
   icons: {
     icon: "/icon",
   },
