@@ -82,6 +82,7 @@ export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerPr
             <Link
               href="/"
               onClick={() => setIsMenuOpen(false)}
+              aria-label="Go to Hormoscale homepage"
               className="inline-flex items-center gap-2.5"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#6B3FA0] bg-white">

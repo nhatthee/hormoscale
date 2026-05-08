@@ -1,7 +1,12 @@
-import type { BlogPostConfig } from "@/app/blog/blog-posts";
+type BlogPostingJsonLdData = {
+  slug: string;
+  title: string;
+  description: string;
+  canonical: string;
+};
 
 type BlogPostingJsonLdProps = {
-  post: BlogPostConfig;
+  post: BlogPostingJsonLdData;
 };
 
 export function BlogPostingJsonLd({ post }: BlogPostingJsonLdProps) {
