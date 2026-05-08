@@ -3,7 +3,7 @@ import { glpCalculatorPages } from "@/app/glp-calculator-pages";
 import { FaqJsonLd } from "@/components/FaqJsonLd";
 import { MedicationCalculatorPage } from "@/components/MedicationCalculatorPage";
 
-const config = glpCalculatorPages["semaglutide-weight-loss-calculator"];
+const config = glpCalculatorPages["wegovy-weight-loss-calculator"];
 
 export const metadata: Metadata = {
   title: config.title,
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SemaglutideWeightLossCalculatorPage() {
+export default function WegovyWeightLossCalculatorPage() {
   return (
     <>
       <FaqJsonLd faqs={config.faqs} id={`faq-jsonld-${config.slug}`} />

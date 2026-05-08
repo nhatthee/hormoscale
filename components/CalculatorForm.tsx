@@ -534,8 +534,12 @@ export function CalculatorForm({
 
         <div>
           <label className="mb-3 block text-xs font-black uppercase tracking-[0.08em] text-muted">
-            Select Your Medication
+            Select Calculation Profile
           </label>
+          <p className="mb-3 text-xs leading-5 text-muted">
+            Switch between medication profiles to compare projected weight-loss
+            outcomes.
+          </p>
 
           <div className="flex flex-wrap gap-3">
             {medicationOptions.map(([value, label]) => (

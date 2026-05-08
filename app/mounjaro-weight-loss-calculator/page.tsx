@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { glpCalculatorPages } from "@/app/glp-calculator-pages";
+import { FaqJsonLd } from "@/components/FaqJsonLd";
 import { MedicationCalculatorPage } from "@/components/MedicationCalculatorPage";
 
 const config = glpCalculatorPages["mounjaro-weight-loss-calculator"];
@@ -18,5 +19,10 @@ export const metadata: Metadata = {
 };
 
 export default function MounjaroWeightLossCalculatorPage() {
-  return <MedicationCalculatorPage config={config} />;
+  return (
+    <>
+      <FaqJsonLd faqs={config.faqs} id={`faq-jsonld-${config.slug}`} />
+      <MedicationCalculatorPage config={config} />
+    </>
+  );
 }

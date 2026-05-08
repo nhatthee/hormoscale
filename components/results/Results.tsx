@@ -52,7 +52,7 @@ export function Results({ results }: ResultsProps) {
   const goalAssessment = getGoalAssessment(results);
 
   return (
-    <section id="results" className="space-y-8">
+    <section id="results" className="space-y-6 md:space-y-8">
       <ResultsHero results={results} />
       <MetricsGrid results={results} />
       <ProgressSection results={results} />

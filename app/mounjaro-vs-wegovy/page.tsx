@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { glpCalculatorPages } from "@/app/glp-calculator-pages";
+import { glpComparisonPages } from "@/app/glp-comparison-pages";
+import { ComparisonPage } from "@/components/ComparisonPage";
 import { FaqJsonLd } from "@/components/FaqJsonLd";
-import { MedicationCalculatorPage } from "@/components/MedicationCalculatorPage";
 
-const config = glpCalculatorPages["semaglutide-weight-loss-calculator"];
+const config = glpComparisonPages["mounjaro-vs-wegovy"];
 
 export const metadata: Metadata = {
   title: config.title,
@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SemaglutideWeightLossCalculatorPage() {
+export default function MounjaroVsWegovyPage() {
   return (
     <>
       <FaqJsonLd faqs={config.faqs} id={`faq-jsonld-${config.slug}`} />
-      <MedicationCalculatorPage config={config} />
+      <ComparisonPage config={config} />
     </>
   );
 }
