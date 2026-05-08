@@ -14,7 +14,7 @@ export function Header() {
           className="inline-flex items-center gap-2.5"
         >
           {/* H Box */}
-          <span className="flex h-13 w-13 items-center justify-center rounded-[18px] bg-[#F5A623] shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
+          <span className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#F5A623] shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
           <span className="text-4xl font-black leading-none text-[#6B3FA0]">
   H
 </span>
@@ -22,18 +22,18 @@ export function Header() {
 
           {/* Brand Text */}
           <span className="flex flex-col leading-none">
-            <span className="text-[1.5rem] font-light uppercase tracking-[-0.01em] text-white">
+            <span className="text-[1rem] font-light uppercase tracking-[-0.01em] text-white">
               Hormoscale
             </span>
 
-            <span className="mt-1 text-[12px] font-light uppercase tracking-[0.2em] text-white/90">
+            <span className="mt-1 text-[10px] font-light uppercase tracking-[0.2em] text-white/90">
               Weight Management Tools
             </span>
           </span>
         </Link>
 
         {/* Hero Title */}
-        <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white md:text-7xl">
+        <h1 className="mt-6 max-w-4xl text-4xl font-black leading-[0.95] tracking-tight text-white sm:text-5xl md:text-7xl">
           Your <span className="text-[#73E0D1]">Weight Loss</span>
           <br />
           Journey Calculator
