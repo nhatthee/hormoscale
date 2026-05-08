@@ -1,6 +1,23 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-export function Header() {
+type HeaderProps = {
+  title?: ReactNode;
+  description?: string;
+};
+
+export function Header({ title, description }: HeaderProps) {
+  const heroTitle = title ?? (
+    <>
+      Your <span className="text-[#73E0D1]">Weight Loss</span>
+      <br />
+      Journey Calculator
+    </>
+  );
+  const heroDescription =
+    description ??
+    "Estimate your progress with GLP-1 medications like Wegovy, Ozempic, and Mounjaro — personalized to your goals.";
+
   return (
     <header className="relative overflow-hidden bg-[#6B3FA0]">
       {/* Background glow */}
@@ -34,15 +51,12 @@ export function Header() {
 
         {/* Hero Title */}
         <h1 className="mt-6 max-w-4xl text-4xl font-black leading-[0.95] tracking-tight text-white sm:text-5xl md:text-7xl">
-          Your <span className="text-[#73E0D1]">Weight Loss</span>
-          <br />
-          Journey Calculator
+          {heroTitle}
         </h1>
 
         {/* Hero Description */}
         <p className="mt-6 max-w-2xl text-base leading-7 text-white/80 md:text-lg">
-          Estimate your progress with GLP-1 medications like Wegovy, Ozempic,
-          and Mounjaro — personalized to your goals.
+          {heroDescription}
         </p>
       </div>
     </header>

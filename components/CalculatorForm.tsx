@@ -6,7 +6,7 @@ import { trackEvent } from "@/lib/gtag";
 
 type Unit = "imperial" | "metric";
 type Sex = "male" | "female";
-type Medication =
+export type Medication =
   | "semaglutide-high"
   | "semaglutide-low"
   | "tirzepatide"
@@ -15,6 +15,8 @@ type Medication =
 
 type CalculatorFormProps = {
   onCalculate: (results: CalculationResults) => void;
+  defaultMedication?: Medication;
+  medicationHelperText?: string;
 };
 
 const medicationData: Record<
@@ -55,7 +57,11 @@ function getBmiCategory(bmi: number) {
   return "Obese III";
 }
 
-export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
+export function CalculatorForm({
+  onCalculate,
+  defaultMedication = "semaglutide-high",
+  medicationHelperText,
+}: CalculatorFormProps) {
   const [unit, setUnit] = useState<Unit>("imperial");
   const [age, setAge] = useState("47");
   const [sex, setSex] = useState<Sex>("male");
@@ -68,7 +74,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
   const [weightKg, setWeightKg] = useState("82");
 
   const [goalWeight, setGoalWeight] = useState("148");
-  const [medication, setMedication] = useState<Medication>("semaglutide-high");
+  const [medication, setMedication] = useState<Medication>(defaultMedication);
   const [duration, setDuration] = useState("12");
   const [activity, setActivity] = useState("1.1");
 
@@ -547,6 +553,12 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
               </button>
             ))}
           </div>
+
+          {medicationHelperText ? (
+            <p className="mt-3 text-xs leading-5 text-muted">
+              {medicationHelperText}
+            </p>
+          ) : null}
         </div>
 
         <div className="grid gap-5 md:grid-cols-2">
