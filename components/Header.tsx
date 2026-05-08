@@ -53,7 +53,18 @@ export function Header({ title, description, currentPath }: HeaderProps) {
               </span>
             </span>
           </Link>
-          <MobileCalculatorDrawer currentPath={currentPath} />
+          <div className="hidden items-center gap-2 md:flex">
+            <Link
+              href="/blog"
+              className="rounded-lg border border-white/35 bg-white/10 px-3 py-2 text-xs font-black uppercase tracking-[0.08em] text-white transition hover:bg-white/15"
+            >
+              Blog
+            </Link>
+            <MobileCalculatorDrawer currentPath={currentPath} />
+          </div>
+          <div className="md:hidden">
+            <MobileCalculatorDrawer currentPath={currentPath} />
+          </div>
         </div>
 
         {/* Hero Title */}

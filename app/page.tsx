@@ -137,6 +137,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-5xl px-4 pb-12 md:px-6">
+        <div className="rounded-2xl border border-[#E9E3F4] bg-white p-6 shadow-[0_8px_20px_rgba(107,63,160,0.08)] md:p-8">
+          <h2 className="text-2xl font-black tracking-tight text-[#6B3FA0]">
+            Latest GLP-1 Articles
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4F4862]">
+            Educational guides on GLP-1 medications, weight-loss timelines, and
+            treatment comparisons.
+          </p>
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            {[
+              {
+                href: "/blog/ozempic-weight-loss-timeline",
+                label: "Ozempic Weight Loss Timeline",
+              },
+              {
+                href: "/blog/how-long-does-wegovy-take-to-work",
+                label: "How Long Does Wegovy Take to Work?",
+              },
+              {
+                href: "/blog/tirzepatide-weight-loss-timeline",
+                label: "Tirzepatide Weight Loss Timeline",
+              },
+            ].map((article) => (
+              <Link
+                key={article.href}
+                href={article.href}
+                className="rounded-xl border border-[#E9E3F4] bg-[#FAF7FF] px-4 py-4 text-sm font-bold text-[#6B3FA0] transition hover:border-[#6B3FA0] hover:bg-white"
+              >
+                {article.label}
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/blog"
+            className="mt-5 inline-flex rounded-xl bg-[#6B3FA0] px-5 py-3 text-sm font-black text-white transition hover:bg-[#5c3390]"
+          >
+            View All Articles
+          </Link>
+        </div>
+      </section>
+
       <Footer />
     </main>
   );

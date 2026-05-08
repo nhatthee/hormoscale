@@ -10,7 +10,11 @@ type MobileCalculatorDrawerProps = {
 
 export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const comparisonLinks = [
+    { href: "/wegovy-vs-ozempic", label: "Wegovy vs Ozempic" },
+    { href: "/mounjaro-vs-wegovy", label: "Mounjaro vs Wegovy" },
+    { href: "/tirzepatide-vs-semaglutide", label: "Tirzepatide vs Semaglutide" },
+  ] as const;
 
   return (
     <>
@@ -34,15 +38,14 @@ export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerPr
             <span>Home</span>
           </Link>
 
-          <button
-            type="button"
-            aria-label="Search calculators"
-            onClick={() => setIsSearchOpen(true)}
+          <Link
+            href="/blog"
+            aria-label="Go to blog"
             className="flex flex-col items-center justify-center gap-1 rounded-lg py-1 text-xs font-bold text-[#6B3FA0]"
           >
-            <span className="text-lg leading-none">⌕</span>
-            <span>Search</span>
-          </button>
+            <span className="text-lg leading-none">📰</span>
+            <span>Blog</span>
+          </Link>
 
           <button
             type="button"
@@ -71,14 +74,25 @@ export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerPr
         />
 
         <aside
-          className={`absolute bottom-3 right-3 top-3 flex w-[88%] max-w-md flex-col overflow-y-auto rounded-2xl border border-[#E9E3F4] bg-white p-5 shadow-2xl transition-transform duration-300 ease-out ${
+          className={`absolute bottom-3 right-3 top-3 flex w-[88%] max-w-[400px] flex-col overflow-y-auto rounded-2xl border border-[#E9E3F4] bg-white p-4 shadow-2xl transition-transform duration-300 ease-out sm:max-w-[340px] md:max-w-[400px] ${
             isMenuOpen ? "translate-x-0" : "translate-x-[105%]"
           }`}
         >
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-black text-[#6B3FA0]">
-              Explore Other GLP-1 Calculators
-            </h2>
+          <div className="flex items-center justify-between gap-3">
+            <Link
+              href="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="inline-flex items-center gap-2.5"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#6B3FA0] bg-white">
+                <span className="text-2xl font-black leading-none text-[#6B3FA0]">
+                  H
+                </span>
+              </span>
+              <span className="text-sm font-black uppercase tracking-[0.08em] text-[#6B3FA0]">
+                Hormoscale
+              </span>
+            </Link>
             <button
               type="button"
               aria-label="Close menu"
@@ -89,12 +103,20 @@ export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerPr
             </button>
           </div>
 
-          <p className="mt-3 text-sm leading-6 text-[#4F4862]">
-            Compare projected weight-loss outcomes across popular GLP-1 and
-            related treatment profiles.
-          </p>
+          <div className="mt-4 border-b border-[#E9E3F4] pb-3">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-[#6B3FA0]">
+              Explore
+            </p>
+          </div>
 
-          <div className="mt-5 space-y-2">
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.08em] text-[#6B3FA0]">
+                <span className="text-base leading-none">⚖️</span>
+                GLP-1 Calculators
+              </p>
+              <span className="text-sm text-[#6B3FA0]">⌄</span>
+            </div>
             {glpCalculatorLinks.map((link) => {
               const isCurrent = currentPath === link.href;
               return (
@@ -103,97 +125,75 @@ export function MobileCalculatorDrawer({ currentPath }: MobileCalculatorDrawerPr
                   href={link.href}
                   aria-current={isCurrent ? "page" : undefined}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block rounded-xl border px-4 py-3 text-sm font-black ${
+                  className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm font-black ${
                     isCurrent
                       ? "border-[#D7C8EF] bg-[#F3ECFF] text-[#8B73B2] opacity-70"
-                      : "border-[#E9E3F4] bg-[#FAF7FF] text-[#6B3FA0]"
+                      : "border-[#E9E3F4] bg-[#FBF8FF] text-[#6B3FA0]"
                   }`}
                 >
-                  {link.label}
-                  {isCurrent ? " (Current)" : ""}
+                  <span>{link.label}</span>
+                  <span className="text-sm">›</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.08em] text-[#6B3FA0]">
+                <span className="text-base leading-none">🔀</span>
+                Comparisons
+              </p>
+              <span className="text-sm text-[#6B3FA0]">⌄</span>
+            </div>
+            {comparisonLinks.map((link) => {
+              const isCurrent = currentPath === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isCurrent ? "page" : undefined}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm font-black ${
+                    isCurrent
+                      ? "border-[#D7C8EF] bg-[#F3ECFF] text-[#8B73B2] opacity-70"
+                      : "border-[#E9E3F4] bg-[#FBF8FF] text-[#6B3FA0]"
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <span className="text-sm">›</span>
                 </Link>
               );
             })}
           </div>
 
           <div className="mt-auto pt-6">
-            <div className="mx-auto flex w-full items-center justify-center gap-5 border-t border-[#E9E3F4] pt-4 text-sm">
+            <div className="grid gap-3">
               <Link
-                href="/privacy"
+                href="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-[#6F6785] transition-colors hover:text-[#6B3FA0]"
+                className="flex items-center justify-between rounded-xl border border-[#E9E3F4] bg-[#FBF8FF] px-4 py-3"
               >
-                Privacy
+                <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.08em] text-[#6B3FA0]">
+                  <span className="text-base leading-none">⌂</span>
+                  Home
+                </span>
+                <span className="text-[#6B3FA0]">›</span>
               </Link>
               <Link
-                href="/terms"
+                href="/blog"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-[#6F6785] transition-colors hover:text-[#6B3FA0]"
+                className="flex items-center justify-between rounded-xl border border-[#E9E3F4] bg-[#FBF8FF] px-4 py-3"
               >
-                Terms
+                <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.08em] text-[#6B3FA0]">
+                  <span className="text-base leading-none">✎</span>
+                  Blog
+                </span>
+                <span className="text-[#6B3FA0]">›</span>
               </Link>
             </div>
           </div>
         </aside>
-      </div>
-
-      <div
-        className={`fixed inset-0 z-50 ${
-          isSearchOpen ? "pointer-events-auto" : "pointer-events-none"
-        }`}
-      >
-        <button
-          type="button"
-          aria-label="Close search backdrop"
-          className={`absolute inset-0 bg-[#2B2340]/55 transition-opacity duration-200 ${
-            isSearchOpen ? "opacity-100" : "opacity-0"
-          }`}
-          onClick={() => setIsSearchOpen(false)}
-        />
-
-        <section
-          className={`absolute left-1/2 top-1/2 w-[92%] max-w-lg -translate-x-1/2 rounded-2xl border border-[#E9E3F4] bg-white p-5 shadow-2xl transition-all duration-200 ${
-            isSearchOpen
-              ? "-translate-y-1/2 opacity-100"
-              : "translate-y-[-45%] opacity-0"
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-black text-[#6B3FA0]">
-              Search Hormoscale
-            </h2>
-            <button
-              type="button"
-              aria-label="Close search"
-              onClick={() => setIsSearchOpen(false)}
-              className="rounded-lg p-2 text-[#6B3FA0]"
-            >
-              ✕
-            </button>
-          </div>
-
-          <input
-            type="search"
-            placeholder="Search calculators, medications, or topics"
-            className="mt-4 w-full rounded-xl border-2 border-[#E9E3F4] bg-[#FAF7FF] px-4 py-3 text-sm outline-none focus:border-[#73E0D1] focus:bg-white"
-          />
-
-          <div className="mt-4 space-y-2">
-            {[
-              ...glpCalculatorLinks,
-              { href: "/disclaimer", label: "Disclaimer" },
-            ].map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsSearchOpen(false)}
-                className="block rounded-xl border border-[#E9E3F4] bg-[#FAF7FF] px-4 py-3 text-sm font-black text-[#6B3FA0] transition hover:border-[#6B3FA0]"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </section>
       </div>
     </>
   );
