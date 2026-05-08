@@ -62,5 +62,47 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: "https://www.hormoscale.com/blog",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/ozempic-weight-loss-timeline",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/how-long-does-wegovy-take-to-work",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/mounjaro-vs-ozempic-side-effects",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/what-bmi-qualifies-for-wegovy",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/semaglutide-meal-plan",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://www.hormoscale.com/blog/tirzepatide-weight-loss-timeline",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
   ];
 }
